@@ -1,9 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-
-
-
     <div class="site-section bg-light">
         <div class="container">
             <div class="row justify-content-center">
@@ -17,17 +14,17 @@
                             </ul>
                         </div>
                     @endif
-                    <form method="post" action="/storeTask" enctype="multipart/form-data" class="p-5 bg-white">
+                    <form method="post" action="/edit/task/{{$todo->id}}" enctype="multipart/form-data" class="p-5 bg-white">
                         @csrf
-                        <div class="row form-group">
+                        <div class="row form-group" {{$todo->id}}>
 
                             <div class="col-md-12">
                                 <label class="text-black" for="subject">Subject</label>
-                                <input type="text" id="name" name="subject" class="form-control">
+                                <input type="text" id="name" name="subject" value="{{$todo->subject}}" class="form-control">
                             </div>
                             <div class="form-group col-md-12">
                                 <label for="exampleFormControlTextarea1">Priority</label>
-                                <select class="form-control form-control-sm" name="priority">
+                                <select class="form-control form-control-sm" value="{{$todo->priority}} "name="priority">
                                     <option>Low</option>
                                     <option>Normal</option>
                                     <option>High</option>
@@ -35,11 +32,11 @@
                             </div>
                             <div class="col-md-12">
                                 <label class="text-black" for="Date">Due date</label>
-                                <input type="date" id="dueDate" name="due_date" class="form-control">
+                                <input type="date" id="dueDate"  value="{{$todo->due_date}}"name="due_date" class="form-control">
                             </div>
                             <div class="col-md-12 form-group">
                                 <label for="text">Status</label>
-                                <select class="form-control form-control-sm" name="status">
+                                <select class="form-control form-control-sm" value="{{$todo->status}}" name="status">
                                     <option>New</option>
                                     <option>In Progress</option>
                                     <option>Complete</option>
@@ -47,13 +44,13 @@
                             </div>
                             <div class="col-md-12">
                                 <label class="text-black" for="progress">Percent complete</label>
-                                <input type="number" id="phone" name="progress" class="form-control">
+                                <input type="number" id="phone" value="{{$todo->progress}}" name="progress" class="form-control">
                             </div>
                         </div>
 
                         <div class="row form-group">
                             <div class="col-md-12">
-                                <input type="submit" value="Add" name="submit" class="btn btn-primary py-2 px-4 text-white">
+                                <input type="submit" value="Edit" name="submit" class="btn btn-primary py-2 px-4 text-white">
                             </div>
                         </div>
                     </form>
@@ -63,3 +60,4 @@
         </div>
     </div>
 @stop
+

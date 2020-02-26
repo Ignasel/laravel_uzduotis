@@ -1,40 +1,46 @@
-@extends('todo/main')
+@extends('layouts.app')
 
 @section('content')
   <div class="container">
+      <div class="btn btn-primary" style="margin: 20px 0">
+          <a href="/addtask" style="color: white; text-decoration: none">New Task</a>
+      </div>
       <div class="table">
           <table>
-              <th>font</th>
+              <th></th>
               <th>Subject</th>
               <th>Priority</th>
               <th>Due date</th>
               <th>Status</th>
               <th>Percent completed</th>
               <th>Modified on</th>
-              @foreach($tasks as $task)
+              <th></th>
+              <th></th>
+              @foreach($tasks as $todo)
               <tr>
                   <td>
                   <div class="form-group form-check">
-                      <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                      <input type="checkbox" class="form-check-input" action="/wrong" id="exampleCheck1">
                   </div>
                   </td>
-                  <td>{{$task->subject}}</td>
+                  <td>{{$todo->subject}}</td>
                   <td
-                      @if($task->priority=="Low")
+                      @if($todo->priority=="Low")
                           style="background-color:forestgreen"
-                      @elseif($task->priority=="Normal")
+                      @elseif($todo->priority=="Normal")
                           style="background-color:deepskyblue"
-                       @else style="background-color: red">
-                  @endif {{$task->priority}} jdjdj </td>
-                  <td>{{$task->due_date}}</td>
-                  <td>{{$task->status}}</td>
+                       @else style="background-color: red" @endif>
+                   {{$todo->priority}}  </td>
+                  <td>{{$todo->due_date}}</td>
+                  <td>{{$todo->status}}</td>
                   <td>
                       <div class="progress">
-                          <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="{{$task->progress}}" aria-valuemin="0" aria-valuemax="100" style="width: {{$task->progress}}%"></div>
+                          <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="{{$todo->progress}}" aria-valuemin="0" aria-valuemax="100" style="width: {{$todo->progress}}%"></div>
                       </div>
                   </td>
-                  <td>{{$task->updated_at}}</td>
-                  <td></td>
+                  <td>{{$todo->updated_at}}</td>
+                  <td><a href="/delete/task/{{$todo->id}}">Delete</a></td>
+                  <td><a href="/update/task/{{$todo->id}}">Edit</a></td>
               </tr>
                   @endforeach
           </table>

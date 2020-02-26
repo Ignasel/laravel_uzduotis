@@ -12,16 +12,22 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth.login');
 });
 
 Route::get('/table', 'TodoController@showTable');
+Route::get('/', 'TodoController@showTable');
 Route::get('/storeTask', 'TodoController@storeTask');
 Route::get('/addtask', 'TodoController@addTask');
 Route::post('/storeTask', 'TodoController@storeTask');
+Route::get('/delete/task/{todo}', 'TodoController@deleteTask');
+Route::post('/edit/task/{todo}', 'TodoController@editTask');
+Route::get('/update/task/{todo}', 'TodoController@updateTask');
+Route::get('/wrong', 'TodoController@wrongUser');
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home', 'TodoController@showTable')->name('table');
+
 
 

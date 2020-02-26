@@ -6,11 +6,16 @@ use App\Todo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
-use File;
 use Gate;
+use File;
 
 class TodoController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth', ['only' => ['showTable', 'addTask', 'storeTask', 'editTask', 'deleteTask', 'updateTask']]);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -95,11 +100,48 @@ class TodoController extends Controller
      * @param  \App\Todo  $todo
      * @return \Illuminate\Http\Response
      */
-    public function edit(Todo $todo)
+    public function editTask(Todo $todo)
     {
-        //
+        Todo::where('id', $todo->id)
+            ->update(['subject' => request('subject'),
+                'priority' => request('priority'),
+                'due_date' => request('due_date'),
+                'status' => request('status'),
+                'progress' => request('progress')]);
+
+        return redirect('table');
     }
 
+    public function deleteTask(Todo $todo)
+    {
+
+        if(Gate::allows('deleteTask', $todo)) {
+
+            $todo->delete();
+            return redirect('table');
+        }
+     return redirect ('wrong');
+
+    }
+
+    public function wrongUser()
+    {
+
+        return view('todo.pages.wrongUser');
+    }
+
+    public function updateTask(Todo $todo)
+    {
+
+        if(Gate::allows($this->updateTask(), $todo)) {
+
+
+            return view('todo.pages.updateTask', compact('todo'));
+
+        }
+        return redirect ('error');
+
+    }
     /**
      * Update the specified resource in storage.
      *
