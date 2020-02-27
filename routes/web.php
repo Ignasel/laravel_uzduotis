@@ -16,7 +16,7 @@ Route::get('/', function () {
 });
 
 Route::get('/table', 'TodoController@showTable');
-Route::get('/', 'TodoController@showTable');
+Route::get('/','TodoController@showTable');
 Route::get('/storeTask', 'TodoController@storeTask');
 Route::get('/addtask', 'TodoController@addTask');
 Route::post('/storeTask', 'TodoController@storeTask');

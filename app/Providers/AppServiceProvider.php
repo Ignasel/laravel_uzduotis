@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Gate;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -23,6 +24,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        Gate::define('updateTask', function ($user, $todo) {
+            return $user->id === $todo->userID;
+        });
+
+        Gate::define('deleteTask', function ($user, $todo) {
+            return $user->id === $todo->userID;
+        });
     }
 }

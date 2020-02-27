@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Todo;
+use  App\Todo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
 use Gate;
 use File;
+
 
 class TodoController extends Controller
 {
@@ -118,9 +119,9 @@ class TodoController extends Controller
         if(Gate::allows('deleteTask', $todo)) {
 
             $todo->delete();
-            return redirect('table');
+            return redirect('table', compact('todo'));
         }
-     return redirect ('wrong');
+     return view ('todo.pages.wrongUser');
 
     }
 
@@ -133,13 +134,13 @@ class TodoController extends Controller
     public function updateTask(Todo $todo)
     {
 
-        if(Gate::allows($this->updateTask(), $todo)) {
+        if(Gate::allows('updateTask', $todo)) {
 
 
             return view('todo.pages.updateTask', compact('todo'));
 
         }
-        return redirect ('error');
+        return view ('todo.pages.wrongUser');
 
     }
     /**
